@@ -1,0 +1,12 @@
+{
+  "name": "Чотири квадрати",
+  "short_name": "4 квадрати",
+  "description": "Дитяча гра з фізичною матрицею 4×4",
+  "lang": "uk",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf9ff",
+  "theme_color": "#7047eb",
+  "icons": [{"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
