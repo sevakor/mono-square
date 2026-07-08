@@ -136,8 +136,9 @@ body{background:var(--paper);font-family:Inter,"SF Pro Display",system-ui,sans-s
 .game-head .game-back svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .game-head>strong{display:flex;justify-content:flex-end;align-items:baseline;gap:2px;font-size:20px;line-height:1;font-weight:800;letter-spacing:-.01em}
 .game-head>strong span{font-size:20px;font-weight:300;letter-spacing:0}
-.game-body{flex:1;margin-top:126px;padding:43px 25px 32px;border-radius:40px 40px 0 0;background:var(--paper);display:flex;flex-direction:column;align-items:center}
-.game-body.game-body-snake{margin-top:81px}
+.game-body{flex:0 0 641px;width:100%;height:641px;margin-top:126px;padding:43px 25px 87px;border-radius:40px 40px 0 0;background:var(--paper);display:flex;flex-direction:column;align-items:center}
+.game-body.game-body-snake{flex-basis:686px;height:686px;margin-top:81px;padding-top:43px}
+.game-body.game-body-snake .progress-row{margin-bottom:25px}
 .game-body .progress-row{position:relative;isolation:isolate;display:flex;justify-content:center;align-items:center;gap:0;margin:0 0 26px;flex-wrap:nowrap}
 .game-body .progress-mark{position:relative;z-index:1;display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;margin-right:18px;border-radius:50%;background:#dde0e2;color:var(--ink);font-size:12px;font-weight:700;outline:0}
 .game-body .progress-mark:last-child{margin-right:0}

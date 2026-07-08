@@ -57,6 +57,10 @@ function persist() { saveState(state); }
 function render() {
   clearTimeout(unlockTimer);
   route = location.hash.slice(1) || '/';
+  const gameTone = state.session?.mode === 'stairs' ? '#F5B5CD' : state.session?.mode === 'mix' ? '#FCB92C' : '#2BB39B';
+  const pageTone = route === '/game' ? gameTone : '#FAF5EF';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', pageTone);
+  document.body.style.background = pageTone;
   const routes = { '/': home, '/select': selectScreen, '/mix': mixScreen, '/stairs': stairsScreen, '/game': gameScreen, '/summary': summaryScreen, '/settings': settingsScreen, '/catalog': catalogScreen };
   (routes[route] || home)();
   window.scrollTo(0, 0);
