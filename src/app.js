@@ -40,7 +40,7 @@ function render() {
 
 function home() {
   app.innerHTML = shell(`<div class="home-content"><section class="hero">
-    <h1>Чотири<br><span>квадрати</span></h1>
+    <h1>Квадро<span>грай</span></h1>
   </section>
   <section class="menu" aria-label="Режими гри">
     ${state.session ? button(`${icon('▶')} Продовжити гру`, 'continue', 'primary continue') : ''}
@@ -62,16 +62,16 @@ function countPicker(selected) {
 
 function selectScreen() {
   const available = DIFFICULTIES.filter(d => state.visibleDifficulties.select.includes(d.id));
-  app.innerHTML = shell(`<section class="panel"><h2>Складність</h2><div class="choices">${available.map(d => choiceCard(d, state.select.difficulty === d.id)).join('')}</div></section>
+  app.innerHTML = shell(`<div class="mode-settings mono-settings"><section class="panel"><h2>Складність</h2><div class="choices">${available.map(d => choiceCard(d, state.select.difficulty === d.id)).join('')}</div></section>
   <section class="panel"><h2>Кількість карток</h2>${countPicker(state.select.count)}</section>
-  ${button('Почати гру →', 'start-select', 'primary wide')}`, 'Моноскладність', '/');
+  ${button('Почати гру', 'start-select', 'primary wide')}</div>`, 'Моноскладність', '/');
 }
 
 function mixScreen() {
   const available = DIFFICULTIES.filter(d => state.visibleDifficulties.mix.includes(d.id));
-  app.innerHTML = shell(`<section class="panel"><h2>Складність</h2><p class="settings-note mix-note">Оберіть щонайменше дві складності.</p><div class="choices">${available.map(d => choiceCard(d, state.mix.difficulties.includes(d.id), true)).join('')}</div></section>
+  app.innerHTML = shell(`<div class="mode-settings mix-settings"><section class="panel"><h2>Складність</h2><p class="settings-note mix-note">Оберіть щонайменше дві складності.</p><div class="choices">${available.map(d => choiceCard(d, state.mix.difficulties.includes(d.id), true)).join('')}</div></section>
   <section class="panel"><h2>Кількість карток</h2>${countPicker(state.mix.count)}</section>
-  ${button('Перемішати й почати ✦', 'start-mix', 'primary wide', state.mix.difficulties.length >= 2 ? '' : 'disabled')}`, 'Мікс', '/');
+  ${button('Почати гру →', 'start-mix', 'primary wide', state.mix.difficulties.length >= 2 ? '' : 'disabled')}</div>`, 'Мікс', '/');
 }
 
 function stairsScreen() {
@@ -136,7 +136,7 @@ function gameScreen(showRetryPrompt = false) {
   const scheme = SCHEMES.find(item => item.id === id);
   if (!scheme) return finishSession();
   const locked = Date.now() < s.controlsAvailableAt;
-  app.innerHTML = `<main class="game-shell"><header class="game-head"><strong>${sessionLabel(s)}</strong><button class="text-button" data-action="finish-menu">Завершити</button></header>
+  app.innerHTML = `<main class="game-shell game-${s.mode}"><header class="game-head"><strong>${sessionLabel(s)}</strong><button class="text-button" data-action="finish-menu">Завершити</button></header>
     ${progressHtml(s)}
     <section class="board-area">${matrixHtml(scheme)}</section>
     <section class="game-actions">${button('Готово!', 'complete', 'primary huge', locked ? 'disabled' : '')}${button('Пропустити', 'skip', 'ghost', locked ? 'disabled' : '')}</section></main>`;
@@ -195,7 +195,7 @@ function finishSession() {
 function summaryScreen() {
   const s = state.summary; if (!s) return navigate('/');
   const label = s.mode === 'stairs' ? `Рівень ${s.parameters.level}` : s.mode === 'mix' ? 'Мікс' : difficulty(s.parameters.difficulty).name;
-  app.innerHTML = shell(`<section class="summary"><div class="confetti" aria-hidden="true">✦ ◼︎ ●</div><p class="eyebrow">${s.mode === 'stairs' ? 'Сходинки' : 'Гру завершено'}</p><h1>Браво!</h1><p class="lead">Ти чудово попрацював / попрацювала.</p><div class="summary-card"><strong>${label}</strong><div><span><b>${s.completed}</b> завершено</span><span><b>${s.skipped}</b> пропущено</span></div></div>
+  app.innerHTML = shell(`<section class="summary"><h1>Браво!</h1><div class="confetti" aria-hidden="true">★ ★ ★</div><div class="summary-card"><strong>${label}</strong><div><span><b>✓ ${s.completed}</b> завершено</span><span><b>× ${s.skipped}</b> пропущено</span></div></div>
     ${s.mode === 'stairs' && s.parameters.level < 12 ? button('Наступний рівень →', 'next-level', 'primary wide') : button('Зіграти ще', 'replay', 'primary wide')}
     ${button('На головну', 'go', 'ghost wide', 'data-to="/"')}</section>`);
 }
