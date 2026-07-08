@@ -184,7 +184,7 @@ function gameScreen(showRetryPrompt = false) {
   app.innerHTML = `<main class="game-shell game-${s.mode}"><header class="game-head"><button class="game-back" data-action="finish-menu" aria-label="Завершити гру">${uiIcons.back}</button>${sessionHeading(s)}</header>
     <div class="game-body ${hasSnakeProgress ? 'game-body-snake' : ''}">${progressHtml(s)}
       <section class="board-area">${matrixHtml(scheme)}</section>
-      <section class="game-actions">${button(`Готово ${uiIcons.check}`, 'complete', 'primary huge', locked ? 'disabled' : '')}${button(uiIcons.skip, 'skip', 'ghost', `${locked ? 'disabled ' : ''}aria-label="Пропустити"`)}</section>
+      <section class="game-actions">${button(`Готово ${uiIcons.check}`, 'complete', 'primary huge', locked ? 'disabled' : '')}${button(`<span class="skip-label">Пропустити</span>${uiIcons.skip}`, 'skip', 'ghost', `${locked ? 'disabled ' : ''}aria-label="Пропустити"`)}</section>
     </div></main>`;
   if (locked) unlockTimer = setTimeout(() => {
     if (route !== '/game' || state.session !== s) return;
@@ -316,7 +316,10 @@ function showModal(title, text, actions, callback) {
   modal._callback = callback; app.append(modal); modal.querySelector('button')?.focus();
 }
 function finishMenu() {
-  showModal('Завершити гру?', 'Прогрес поточної сесії буде втрачено.', [
+  const message = state.session?.mode === 'stairs'
+    ? 'Прогрес сесії лише поточного рівня буде втрачено.'
+    : 'Прогрес поточної сесії буде втрачено.';
+  showModal('Завершити гру?', message, [
     [`Продовжити гру ${uiIcons.play}`, 'close-modal', 'primary'], [`На головну ${uiIcons.home}`, 'discard-home', 'ghost'], [`Налаштування ${uiIcons.settings}`, 'discard-mode', 'ghost']
   ]);
 }

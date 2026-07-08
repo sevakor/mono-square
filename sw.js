@@ -1,4 +1,4 @@
-const CACHE = 'quadragame-v51';
+const CACHE = 'quadragame-v54';
 const ASSETS = ['./','./index.html','./src/app.js','./src/domain.js','./src/storage.js','./src/styles.css','./manifest.webmanifest','./icons/icon.svg'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
